@@ -17,41 +17,99 @@ export class AppHome extends LitElement {
   static styles = [
     styles,
     css`
-    #welcomeBar {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+    .hero {
+    height: 90vh;
+    min-height: 600px;
+    max-height: 900px;
+    max-width: 100%;
+    max-width: 100vw;
+    padding: 0 48px;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  .hero__inner {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero__top-content {
+    flex: 1 1 0px;
+    color: white;
+    margin: 4rem 5rem 0;
+    text-align: center;
+    max-height: 25vh;
+  }
+
+  .hero__top-content h1 {
+    font-weight: normal;
+    font-size: 48px;
+  }
+
+  .hero__top-content fluent-anchor {
+    margin-top: 1rem;
+  }
+
+  .hero__top-content fluent-anchor::part(control) {
+    border-radius: 15px;
+    color: #107652;
+  }
+
+  .hero__top-content fluent-anchor::part(control):hover {
+    color: #2E765E;
+  }
+
+  .hero__bottom-content {
+    flex: 1 1 0px;
+    height: 50vh;
+  }
+
+  .hero__bottom-content img {
+    width: 100%;
+    height: 100%;
+  }
+
+  @media screen and (max-width: 840px) and (min-width: 625px) {
+    .hero__top-content {
+      margin: 4rem 2rem 0px;
+    }
+  }
+
+  @media screen and (max-width: 625px) and (min-width: 480px) {
+    .hero__top-content {
+      margin: 2rem 2rem 0px;
     }
 
-    #welcomeCard,
-    #infoCard {
-      padding: 18px;
-      padding-top: 0px;
+    .hero__bottom-content {
+      margin-top: 7rem;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    header {
+      margin: 0 2rem;
     }
 
-    sl-card::part(footer) {
-      display: flex;
-      justify-content: flex-end;
+    .hero {
+      padding: 0 1rem;
     }
 
-    @media(min-width: 750px) {
-      sl-card {
-        width: 70vw;
-      }
+    .hero__top-content {
+      margin: 1rem 0;
     }
 
+    .hero__top-content h1 {
+      font-size: 36px;
+    }
 
-    @media (horizontal-viewport-segments: 2) {
-      #welcomeBar {
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: space-between;
-      }
-
-      #welcomeCard {
-        margin-right: 64px;
-      }
+    .hero__bottom-content {
+      margin-top: 7rem;
+    }
+  }
     }
   `];
 
@@ -73,64 +131,27 @@ export class AppHome extends LitElement {
 
   render() {
     return html`
-      <app-header></app-header>
+      <app-header enableBack="${true}"></app-header>
+      <div class="hero">
+        <hero-decor></hero-decor>
+        <!-- <pwa-install>Install Repose</pwa-install> -->
+        <div class="hero__inner">
+          <div class="hero__top-content">
+            <h1>Intelligent Daily Mood Journal</h1>
+            <p>Repose is your personal mood tracking companion that helps you organize and reflect upon your daily thoughts.</p>
+            <fluent-anchor href="/journal" appearance="lightweight">Mood check-in</fluent-anchor>
+            <div class="entries">
+              <fluent-accordion-item class="main-accordion">
+                <span slot="heading">See your past journals</span>
 
-      <main>
-        <div id="welcomeBar">
-          <sl-card id="welcomeCard">
-            <div slot="header">
-              <h2>${this.message}</h2>
+              </fluent-accordion-item>
             </div>
-
-            <p>
-              For more information on the PWABuilder pwa-starter, check out the
-              <a href="https://docs.pwabuilder.com/#/starter/quick-start">
-                documentation</a>.
-            </p>
-
-            <p id="mainInfo">
-              Welcome to the
-              <a href="https://pwabuilder.com">PWABuilder</a>
-              pwa-starter! Be sure to head back to
-              <a href="https://pwabuilder.com">PWABuilder</a>
-              when you are ready to ship this PWA to the Microsoft Store, Google Play
-              and the Apple App Store!
-            </p>
-
-            ${'share' in navigator
-              ? html`<sl-button slot="footer" variant="default" @click="${this.share}">
-                        <sl-icon slot="prefix" name="share"></sl-icon>
-                        Share this Starter!
-                      </sl-button>`
-              : null}
-          </sl-card>
-
-          <sl-card id="infoCard">
-            <h2>Technology Used</h2>
-
-            <ul>
-              <li>
-                <a href="https://www.typescriptlang.org/">TypeScript</a>
-              </li>
-
-              <li>
-                <a href="https://lit.dev">lit</a>
-              </li>
-
-              <li>
-                <a href="https://shoelace.style/">Shoelace</a>
-              </li>
-
-              <li>
-                <a href="https://github.com/thepassle/app-tools/blob/master/router/README.md"
-                  >App Tools Router</a>
-              </li>
-            </ul>
-          </sl-card>
-
-          <sl-button href="${resolveRouterPath('about')}" variant="primary">Navigate to About</sl-button>
+          </div>
+          <div class="hero__bottom-content">
+          <img src="assets/media/humans.svg" alt="Humans">
+          </div>
         </div>
-      </main>
+      </div>
     `;
   }
 }

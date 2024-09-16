@@ -5,13 +5,11 @@ import './pages/app-home';
 import './components/header';
 import './styles/global.css';
 import { router } from './router';
-
+import './components/hero-decor';
 @customElement('app-index')
 export class AppIndex extends LitElement {
   static styles = css`
     main {
-      padding-left: 16px;
-      padding-right: 16px;
       padding-bottom: 16px;
     }
   `;

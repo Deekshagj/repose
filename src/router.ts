@@ -1,5 +1,3 @@
-// docs for router https://github.com/thepassle/app-tools/blob/master/router/README.md
-
 import { html } from 'lit';
 
 if (!(globalThis as any).URLPattern) {
@@ -13,36 +11,34 @@ import { lazy } from '@thepassle/app-tools/router/plugins/lazy.js';
 import { title } from '@thepassle/app-tools/router/plugins/title.js';
 
 import './pages/app-home.js';
+import './pages/app-about/app-journal.js'; // Import the new page component
 
 const baseURL: string = (import.meta as any).env.BASE_URL;
 
 export const router = new Router({
-    routes: [
-      {
-        path: resolveRouterPath(),
-        title: 'Home',
-        render: () => html`<app-home></app-home>`
-      },
-      {
-        path: resolveRouterPath('about'),
-        title: 'About',
-        plugins: [
-          lazy(() => import('./pages/app-about/app-about.js')),
-        ],
-        render: () => html`<app-about></app-about>`
-      }
-    ]
-  });
-
-  // This function will resolve a path with whatever Base URL was passed to the vite build process.
-  // Use of this function throughout the starter is not required, but highly recommended, especially if you plan to use GitHub Pages to deploy.
-  // If no arg is passed to this function, it will return the base URL.
-
-  export function resolveRouterPath(unresolvedPath?: string) {
-    var resolvedPath = baseURL;
-    if(unresolvedPath) {
-      resolvedPath = resolvedPath + unresolvedPath;
+  routes: [
+    {
+      path: resolveRouterPath(),
+      title: 'Home',
+      render: () => html`<app-home></app-home>`
+    },
+    {
+      path: resolveRouterPath('journal'), // Update path from 'about' to 'journal'
+      title: 'Journal', // Update title to 'Journal'
+      plugins: [
+        lazy(() => import('./pages/app-about/app-journal.js')), // Update import to the new page component
+      ],
+      render: () => html`<app-journal></app-journal>` // Update render to the new component
     }
+  ]
+});
 
-    return resolvedPath;
+// This function will resolve a path with whatever Base URL was passed to the vite build process.
+export function resolveRouterPath(unresolvedPath?: string) {
+  var resolvedPath = baseURL;
+  if (unresolvedPath) {
+    resolvedPath = resolvedPath + unresolvedPath;
   }
+
+  return resolvedPath;
+}
